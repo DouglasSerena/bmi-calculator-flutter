@@ -1,7 +1,10 @@
+import 'package:ap1/config/theme/theme.dart';
 import 'package:ap1/modules/home/widgets/info_button.widget.dart';
 import 'package:ap1/modules/home/widgets/sex_radio.widget.dart';
 import 'package:flutter/material.dart';
 import "dart:math" as math;
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum YourState { underweight, normal, overweight, obesity }
 
@@ -62,15 +65,38 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     "BMI Calculator",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  InfoButtonWidget()
+                  Row(
+                    children: [
+                      BlocBuilder<ThemeCubit, ThemeData>(
+                          builder: (context, state) {
+                        ThemeCubit themeCubit = context.read<ThemeCubit>();
+
+                        return IconButton(
+                          onPressed: () {
+                            if (state.brightness == Brightness.dark) {
+                              themeCubit.changeLight();
+                            } else {
+                              themeCubit.changeDark();
+                            }
+                          },
+                          icon: Icon(
+                            state.brightness == Brightness.dark
+                                ? Icons.dark_mode
+                                : Icons.light_mode,
+                          ),
+                        );
+                      }),
+                      const InfoButtonWidget(),
+                    ],
+                  )
                 ],
               ),
               const SizedBox(height: 20),

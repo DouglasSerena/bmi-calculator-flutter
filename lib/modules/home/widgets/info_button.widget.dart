@@ -5,8 +5,9 @@ class InfoButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => {
+    return IconButton(
+      icon: const Icon(Icons.info),
+      onPressed: () => {
         showModalBottomSheet<void>(
           context: context,
           builder: (BuildContext context) {
@@ -99,7 +100,6 @@ class InfoButtonWidget extends StatelessWidget {
           },
         )
       },
-      child: const Icon(Icons.info),
     );
   }
 }
